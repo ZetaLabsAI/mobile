@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import { Text, TextInput, View, StyleSheet, Pressable, ScrollView, SafeAreaView, ImageBackground } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Pressable, ScrollView, SafeAreaView, Modal } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import SignIn from './SignIn';
@@ -20,6 +20,13 @@ export default function Chat() {
 
   const handleItemPress = () => {
     scrollViewRef.current?.scrollToEnd({ animated: true });
+  }
+
+  // create a modal pop up
+  const [modalVisible, setModalVisible] = useState(true);
+
+  const uploadFile = () => {
+    setModalVisible(!modalVisible);
   }
 
   const pickDocument = async () => {
@@ -100,9 +107,36 @@ export default function Chat() {
           </View>
         ))}
       </ScrollView>
-      {/* <SignIn /> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Connect with Google or upload files straight from your device</Text>
+            <SignIn />
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={pickDocument}
+            >
+              <AntDesign name="file1" size={20} color="black" style={{ marginRight: 10 }} />
+              <Text style={styles.textStyle}>Upload File</Text>
+            </Pressable>
+            <Pressable
+              style={styles.closeModal}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.sendChat}>
-        <Pressable style={styles.uploadFile} onPress={pickDocument}>
+        <Pressable style={styles.uploadFile} onPress={uploadFile}>
           <AntDesign name="file1" size={20} color="black" />
         </Pressable>
         <TextInput style={styles.chatInput}
@@ -122,6 +156,7 @@ const styles = StyleSheet.create({
   messages: {
     overflow: 'scroll',
     marginBottom: 5,
+    paddingHorizontal: 15,
   },
   container: {
     backgroundColor: process.env.EXPO_PUBLIC_PRIMARY_COLOR,
@@ -166,5 +201,61 @@ const styles = StyleSheet.create({
   messageText: {
     color: process.env.EXPO_PUBLIC_TEXT_PRIMARY_COLOR,
     fontSize: 18,
+  },
+  // modal
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    backgroundColor: "white",
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  buttonOpen: {
+    backgroundColor: "white",
+  },
+  buttonClose: {
+    backgroundColor: "white",
+    borderWidth: 1,
+  },
+  textStyle: {
+    color: "black",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  closeModal: {
+    borderRadius: 20,
+    padding: 8,
+    width: 80,
+    backgroundColor: "#64B5F6",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    marginTop: 30,
   },
 });
