@@ -1,7 +1,10 @@
-import React from 'react';
-import { Text, TextInput, View, StyleSheet, Pressable, ScrollView } from 'react-native';
+import React, { useCallback, useContext } from 'react';
+import { Text, TextInput, View, StyleSheet, Pressable, ScrollView, SafeAreaView, ImageBackground } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
+import SignIn from './SignIn';
+
+import * as DocumentPicker from 'expo-document-picker';
 
 // import { createClient } from '@supabase/supabase-js';
 
@@ -17,6 +20,25 @@ export default function Chat() {
 
   const handleItemPress = () => {
     scrollViewRef.current?.scrollToEnd({ animated: true });
+  }
+
+  const pickDocument = async () => {
+    const result = await DocumentPicker.getDocumentAsync();
+    const endpoint = "https://laivehacktj-f736fedf6a43.herokuapp.com/upload_media";
+    const uri = result.assets[0].uri;
+    const type = result.assets[0].mimeType;
+    const name = result.assets[0].name;
+    
+    // send file to server
+    const formData = new FormData();
+    formData.append("$test_user2", { uri, type, name });
+    fetch(endpoint, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
   }
 
   const sendMessage = () => {
@@ -78,8 +100,9 @@ export default function Chat() {
           </View>
         ))}
       </ScrollView>
+      {/* <SignIn /> */}
       <View style={styles.sendChat}>
-        <Pressable style={styles.uploadFile}>
+        <Pressable style={styles.uploadFile} onPress={pickDocument}>
           <AntDesign name="file1" size={20} color="black" />
         </Pressable>
         <TextInput style={styles.chatInput}

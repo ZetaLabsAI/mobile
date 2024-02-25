@@ -14,8 +14,14 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-google-signin/google-signin": "^11.0.0",
     "@react-navigation/native": "^6.0.2",
+    "@rpldy/native-uploady": "^1.8.0",
     "expo": "~50.0.7",
+    "expo-auth-session": "^5.4.0",
+    "expo-build-properties": "~0.11.1",
+    "expo-dev-client": "^3.3.8",
+    "expo-document-picker": "~11.10.1",
     "expo-font": "~11.10.3",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.7",
@@ -26,10 +32,11 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.4",
+    "react-native-document-picker": "^9.1.1",
+    "react-native-file-picker": "^0.0.21",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
-    "react-native-web": "~0.19.6",
-    "expo-build-properties": "~0.11.1"
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
