@@ -65,11 +65,11 @@ export default function TabTwoScreen() {
       ) : (
         <View>
           <View style={{ backgroundColor: process.env.EXPO_PUBLIC_PRIMARY_COLOR, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={styles.title}>Sign Up</Text>
+            <Text style={styles.title}>Sign In</Text>
             <TextInput style={styles.input} placeholder="Email" ref={input => { var text = input }} onChangeText={text => setEmail(text)} value={email}/>
             <TextInput style={styles.input} placeholder="Password" ref={input => { var text = input }} onChangeText={text => setPassword(text)} value={password}/>
             <Pressable style={styles.signUpButton} onPress={doesHaveAccount}>
-              <Text style={{ color: "#fff" }}>Sign Up</Text>
+              <Text style={{ color: "#fff" }}>Sign In</Text>
             </Pressable>
             <Pressable onPress={doesHaveAccount} style={{ marginTop: 20 }}>
               <Text style={{ color: "#fff" }}>Already have an account? Sign up</Text>

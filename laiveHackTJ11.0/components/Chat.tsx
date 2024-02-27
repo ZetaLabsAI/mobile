@@ -16,6 +16,8 @@ export default function Chat() {
   const [messages, setMessages] = useState(["‎Welcome to Laive. What can I help you with?"]);
   const [currMessage, setCurrMessage] = useState("");
 
+  const [uploaded, setUploaded] = useState(false);
+
   const scrollViewRef = React.useRef<ScrollView>(null);
 
   const handleItemPress = () => {
@@ -45,6 +47,8 @@ export default function Chat() {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+    }).then(response => response.text()).then(data => {
+      setUploaded(true);
     })
   }
 
@@ -126,6 +130,7 @@ export default function Chat() {
               <AntDesign name="file1" size={20} color="black" style={{ marginRight: 10 }} />
               <Text style={styles.textStyle}>Upload File</Text>
             </Pressable>
+            {uploaded ? <Text style={styles.successfullUpload}>File uploaded successfully!</Text> : null}
             <Pressable
               style={styles.closeModal}
               onPress={() => setModalVisible(!modalVisible)}
@@ -245,6 +250,12 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  successfullUpload: {
+    marginBottom: 5,
+    marginTop: 10,
     textAlign: "center",
     fontWeight: "bold",
   },
