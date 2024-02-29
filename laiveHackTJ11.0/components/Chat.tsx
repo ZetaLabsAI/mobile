@@ -1,10 +1,13 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Text, TextInput, View, StyleSheet, Pressable, ScrollView, SafeAreaView, Modal } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
-import SignIn from './SignIn';
+import SignIn from './GoogleSignIn';
+
+import { UserContext } from './LaiveSignIn';
 
 import * as DocumentPicker from 'expo-document-picker';
+import { Link } from 'expo-router';
 
 // import { createClient } from '@supabase/supabase-js';
 
@@ -15,6 +18,8 @@ import * as DocumentPicker from 'expo-document-picker';
 export default function Chat() {
   const [messages, setMessages] = useState(["‎Welcome to Laive. What can I help you with?"]);
   const [currMessage, setCurrMessage] = useState("");
+
+  const { email, isSignedIn } = useContext(UserContext);
 
   const [uploaded, setUploaded] = useState(false);
 
@@ -66,38 +71,20 @@ export default function Chat() {
     })
     .then((response) => response.text())
     .then((data) => {
-      console.log(data);
-      setMessages([...messages, currMessage, "‎" + data]);
+
+      if (data.includes("<title>Application Error</title>")) {
+        setMessages([...messages, currMessage, "‎I'm sorry, I don't understand. Please try again later."]);
+      } else {
+        setMessages([...messages, currMessage, "‎" + data]);
+      }
     })
     .catch((error) => {
       setMessages([...messages, currMessage, "‎I'm sorry, I don't understand."]);
       console.error("Error:", error);
     });
-
-    // const xhr = new XMLHttpRequest();
-    // xhr.open("POST", "https://laivehacktj-f736fedf6a43.herokuapp.com/query");
-    // xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    // const body = JSON.stringify({
-    //   user_id: "test_user2",
-    //   query: currMessage,
-    // });
-    // xhr.onload = () => {
-    //   if (xhr.readyState == 4 && xhr.status == 201) {
-    //     console.log(JSON.parse(xhr.responseText));
-    //     setMessages([...messages, "‎" + JSON.parse(xhr.responseText)["response"]]);
-    //   } else {
-    //     console.log(`Error: ${xhr.status}`);
-    //   }
-    // };
-    // xhr.send(body);
-
     setCurrMessage("");
   }
 
-  // const uploadFile = () = {
-  //   console.log("uploading file");
-  // }
- 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.messages}
@@ -114,11 +101,27 @@ export default function Chat() {
       <Modal
         animationType="slide"
         transparent={true}
+        visible={!isSignedIn}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Sign in to access Laive</Text>
+            
+            <Link href="/two">
+              <Text style={styles.textStyle}>Go to Sign In</Text>
+            </Link> 
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
       >
+        {/* {isSignedIn ? ( */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Connect with Google or upload files straight from your device</Text>
@@ -139,6 +142,16 @@ export default function Chat() {
             </Pressable>
           </View>
         </View>
+        {/* ):
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Sign in to upload files</Text>
+            <Link href="/two">
+              <Text style={styles.textStyle}>Go to Sign In</Text>
+            </Link>
+          </View>
+        </View>
+        } */}
       </Modal>
       <View style={styles.sendChat}>
         <Pressable style={styles.uploadFile} onPress={uploadFile}>
