@@ -4,10 +4,10 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import SignIn from './GoogleSignIn';
 
-import { UserContext } from './LaiveSignIn';
-
 import * as DocumentPicker from 'expo-document-picker';
 import { Link } from 'expo-router';
+
+import AppContext from './AppContext';
 
 // import { createClient } from '@supabase/supabase-js';
 
@@ -19,8 +19,6 @@ export default function Chat() {
   const [messages, setMessages] = useState(["‎Welcome to Laive. What can I help you with?"]);
   const [currMessage, setCurrMessage] = useState("");
 
-  const { email, isSignedIn } = useContext(UserContext);
-
   const [uploaded, setUploaded] = useState(false);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -30,10 +28,20 @@ export default function Chat() {
   }
 
   // create a modal pop up
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const context = useContext(AppContext);
+  const [signInModal, setSignInModal] = useState(context.isSignedIn);
 
   const uploadFile = () => {
-    setModalVisible(!modalVisible);
+    console.log(context.isSignedIn)
+    if (context.isSignedIn) {
+      setModalVisible(true);
+      setSignInModal(false);
+    } else {
+      setModalVisible(false);
+      setSignInModal(false);
+      setSignInModal(true);
+    }
   }
 
   const pickDocument = async () => {
@@ -101,7 +109,10 @@ export default function Chat() {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={!isSignedIn}
+        visible={signInModal}
+        onRequestClose={() => {
+          setSignInModal(!signInModal)
+        }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
@@ -6,6 +6,8 @@ import { Pressable } from 'react-native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+
+import AppContext from '../../components/AppContext'
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -17,7 +19,24 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const toggleIsSignedIn = () => {
+    isSignedIn ? setIsSignedIn(true) : setIsSignedIn(false);
+  };
+
+  const userSettings = {
+    isSignedIn: isSignedIn,
+    email: email,
+    password: password,
+    setIsSignedIn,
+    setEmail,
+    setPassword,
+  };
   return (
+    <AppContext.Provider value={userSettings}>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -58,5 +77,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    </AppContext.Provider>
   );
 }
