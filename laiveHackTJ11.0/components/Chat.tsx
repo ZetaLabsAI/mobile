@@ -5,7 +5,7 @@ import { useState } from 'react';
 import SignIn from './GoogleSignIn';
 
 import * as DocumentPicker from 'expo-document-picker';
-import { Link } from 'expo-router';
+import SmsAndroid from 'react-native-get-sms-android';
 
 import AppContext from './AppContext';
 
@@ -27,7 +27,6 @@ export default function Chat() {
     scrollViewRef.current?.scrollToEnd({ animated: true });
   }
 
-  // create a modal pop up
   const [modalVisible, setModalVisible] = useState(false);
   const context = useContext(AppContext);
   const [signInModal, setSignInModal] = useState(context.isSignedIn);
@@ -93,6 +92,50 @@ export default function Chat() {
     setCurrMessage("");
   }
 
+  var filter = {
+    box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
+   
+    // /**
+    //  *  the next 3 filters can work together, they are AND-ed
+    //  *  
+    //  *  minDate, maxDate filters work like this:
+    //  *    - If and only if you set a maxDate, it's like executing this SQL query:
+    //  *    "SELECT * from messages WHERE (other filters) AND date <= maxDate"
+    //  *    - Same for minDate but with "date >= minDate"
+    //  */
+    // minDate: 1554636310165, // timestamp (in milliseconds since UNIX epoch)
+    // maxDate: 1556277910456, // timestamp (in milliseconds since UNIX epoch)
+    // bodyRegex: '(.*)How are you(.*)', // content regex to match
+   
+    // /** the next 5 filters should NOT be used together, they are OR-ed so pick one **/
+    // read: 0, // 0 for unread SMS, 1 for SMS already read
+    // _id: 1234, // specify the msg id
+    // thread_id: 12 // specify the conversation thread_id
+    // address: '+1888------', // sender's phone number
+    // body: 'How are you', // content to match
+    // /** the next 2 filters can be used for pagination **/
+    // indexFrom: 0, // start from index 0
+    // maxCount: 10, // count of SMS to return each time
+  };
+   
+  SmsAndroid.list(
+    JSON.stringify(filter),
+    (fail: string) => {
+      console.log('Failed with this error: ' + fail);
+    },
+    (count: any, smsList: string) => {
+      console.log('Count: ', count);
+      console.log('List: ', smsList);
+      var arr = JSON.parse(smsList);
+   
+      arr.forEach(function(object: string) {
+        console.log('Object: ' + object);
+        console.log('-->' + object.date);
+        console.log('-->' + object.body);
+      });
+    },
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.messages}
@@ -118,9 +161,12 @@ export default function Chat() {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Sign in to access Laive</Text>
             
-            <Link href="/two">
-              <Text style={styles.textStyle}>Go to Sign In</Text>
-            </Link> 
+            <Pressable
+              style={styles.closeModal}
+              onPress={() => setSignInModal(!signInModal)}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -132,7 +178,6 @@ export default function Chat() {
           setModalVisible(!modalVisible);
         }}
       >
-        {/* {isSignedIn ? ( */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Connect with Google or upload files straight from your device</Text>
@@ -153,16 +198,6 @@ export default function Chat() {
             </Pressable>
           </View>
         </View>
-        {/* ):
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Sign in to upload files</Text>
-            <Link href="/two">
-              <Text style={styles.textStyle}>Go to Sign In</Text>
-            </Link>
-          </View>
-        </View>
-        } */}
       </Modal>
       <View style={styles.sendChat}>
         <Pressable style={styles.uploadFile} onPress={uploadFile}>

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "laiveHackTJ11.0",
-    "slug": "laiveHackTJ11.0",
+    "name": "laive",
+    "slug": "laive",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zacbaker.laive"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.zacbaker.laive"
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +44,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "74fe12f1-47ba-4e4a-88d2-ef9ad694b031"
+      }
     }
   }
 }

@@ -112,4 +112,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  signOutButton: {
+    // backgroundColor: process.env.EXPO_PUBLIC_SECONDARY_COLOR,
+    height: 45,
+    width: 250,
+    borderRadius: 20,
+    backgroundColor: '#64B5F6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
