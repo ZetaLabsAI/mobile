@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 
 const SignIn = () => {
-  const YOUR_CLIENT_ID = "706719693983-312cmccc3faeobtajbpv7260rq268d52.apps.googleusercontent.com"
+  const YOUR_CLIENT_ID = "78467360708-q883c862hm9omjbhjkd9ctjdjtll2eam.apps.googleusercontent.com"
   const YOUR_REDIRECT_URI = "https://laivehacktj-f736fedf6a43.herokuapp.com/google_redirect"
    
   const handlePress = async () => {

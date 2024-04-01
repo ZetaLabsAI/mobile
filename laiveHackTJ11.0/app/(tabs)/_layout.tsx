@@ -52,9 +52,9 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Chat',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="/Help" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
@@ -73,7 +73,7 @@ export default function TabLayout() {
         name="two"
         options={{
           title: 'Account',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
