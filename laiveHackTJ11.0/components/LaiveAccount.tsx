@@ -56,7 +56,7 @@ export default function LaiveAccount() {
       {context.isSignedIn ? (
         <Account />
       ) : (
-        <View>
+        <View style={{ backgroundColor: process.env.EXPO_PUBLIC_PRIMARY_COLOR }}>
           {isSigningUp ? (
             <SignUp />
           ) : (

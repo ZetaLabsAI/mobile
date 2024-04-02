@@ -73,7 +73,7 @@ export default function Chat() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user_id: 'test_user2', query: currMessage }),
+      body: JSON.stringify({ user_id: context.email, query: currMessage }),
     })
     .then((response) => response.text())
     .then((data) => {

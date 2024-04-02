@@ -1,16 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation } from "@react-navigation/native";
-import * as Linking from "expo-linking";
+
+import AppContext from "./AppContext";
 
 const SignIn = () => {
   const YOUR_CLIENT_ID = "78467360708-q883c862hm9omjbhjkd9ctjdjtll2eam.apps.googleusercontent.com"
   const YOUR_REDIRECT_URI = "https://laivehacktj-f736fedf6a43.herokuapp.com/google_redirect"
+
+  const context = useContext(AppContext);
    
   const handlePress = async () => {
     const result = await WebBrowser.openAuthSessionAsync(
-      `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${YOUR_CLIENT_ID}&redirect_uri=${YOUR_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/drive&access_type=offline&state=1234_purpleGoogle&prompt=consent`,
+      `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${YOUR_CLIENT_ID}&redirect_uri=${YOUR_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/drive&access_type=offline&state=${context.email}&prompt=consent`,
       YOUR_REDIRECT_URI
     )
   }
