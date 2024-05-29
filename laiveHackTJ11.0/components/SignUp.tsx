@@ -1,4 +1,4 @@
-import { TextInput, Pressable, StyleSheet } from 'react-native';
+import { TextInput, Pressable, StyleSheet, ToastAndroid } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import React, { useState, useContext } from 'react';
@@ -14,6 +14,10 @@ export default function LaiveAccount() {
 
   const doesHaveAccount = () => {
     const endpoint2 = "https://laivehacktj-f736fedf6a43.herokuapp.com/create_user";
+    if (password.length < 10) {
+      ToastAndroid.show("Password must be at least 10 characters long", ToastAndroid.SHORT);
+      return;
+    }
     fetch(endpoint2, {
       method: "POST",
       headers: {

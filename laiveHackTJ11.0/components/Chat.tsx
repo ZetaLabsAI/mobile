@@ -51,7 +51,7 @@ export default function Chat() {
     
     // send file to server
     const formData = new FormData();
-    formData.append("$test_user2", { uri, type, name });
+    formData.append("$" + context.email, { uri, type, name });
     fetch(endpoint, {
       method: "POST",
       body: formData,

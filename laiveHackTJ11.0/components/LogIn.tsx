@@ -1,4 +1,4 @@
-import { TextInput, Pressable, StyleSheet } from 'react-native';
+import { TextInput, Pressable, StyleSheet, ToastAndroid } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import React, { useState, useContext } from 'react';
@@ -21,14 +21,15 @@ export default function LaiveAccount() {
       },
       body: JSON.stringify({ user_id: email, password: password }),
     })
-    // .then(response => response.text()).then(data => {
-    //   if (data === "NO") {
-
-    //   }
-    // })
-    context.setIsSignedIn(true);
-    context.setPassword(password);
-    context.setEmail(email);
+    .then(response => response.text()).then(data => {
+      if (data === "NO") {
+        ToastAndroid.show("Incorrect email or password", ToastAndroid.SHORT);
+      } else {
+        context.setIsSignedIn(true);
+        context.setPassword(password);
+        context.setEmail(email);
+      }
+    })
   }
 
   const signOut = () => {
