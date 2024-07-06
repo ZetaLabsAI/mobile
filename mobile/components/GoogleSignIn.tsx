@@ -7,7 +7,7 @@ import AppContext from "./AppContext";
 
 const SignIn = () => {
   const YOUR_CLIENT_ID = "78467360708-q883c862hm9omjbhjkd9ctjdjtll2eam.apps.googleusercontent.com"
-  const YOUR_REDIRECT_URI = "https://laivehacktj-f736fedf6a43.herokuapp.com/google_redirect"
+  const YOUR_REDIRECT_URI = "https://zeta-labs-backend-5ba732d1aabf.herokuapp.com/google_redirect"
 
   const context = useContext(AppContext);
    

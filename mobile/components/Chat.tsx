@@ -37,14 +37,13 @@ export default function Chat() {
       setSignInModal(false);
     } else {
       setModalVisible(false);
-      setSignInModal(false);
       setSignInModal(true);
     }
   }
 
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync();
-    const endpoint = "https://laivehacktj-f736fedf6a43.herokuapp.com/upload_media";
+    const endpoint = "https://zeta-labs-backend-5ba732d1aabf.herokuapp.com/upload_media";
     const uri = result.assets[0].uri;
     const type = result.assets[0].mimeType;
     const name = result.assets[0].name;
@@ -67,7 +66,7 @@ export default function Chat() {
     handleItemPress();
     setMessages([...messages, currMessage]);
 
-    const endpoint = "https://laivehacktj-f736fedf6a43.herokuapp.com/query";
+    const endpoint = "https://zeta-labs-backend-5ba732d1aabf.herokuapp.com/query";
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -118,7 +117,7 @@ export default function Chat() {
             
             <Pressable
               style={styles.closeModal}
-              onPress={() => setSignInModal(!signInModal)}
+              onPress={() => setSignInModal(false)}
             >
               <Text style={styles.textStyle}>Close</Text>
             </Pressable>

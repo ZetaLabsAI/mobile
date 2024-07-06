@@ -17,7 +17,7 @@ export default function LaiveAccount() {
   const context = useContext(AppContext);
 
   const doesHaveAccount = () => {
-    const endpoint = "https://laivehacktj-f736fedf6a43.herokuapp.com/sign_in";
+    const endpoint = "https://zeta-labs-backend-5ba732d1aabf.herokuapp.com/sign_in";
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -26,7 +26,7 @@ export default function LaiveAccount() {
       body: JSON.stringify({ user_id: email, password: password }),
     }).then(response => response.text()).then(data => {
       if (data === "NO") {
-        const endpoint2 = "https://laivehacktj-f736fedf6a43.herokuapp.com/create_user";
+        const endpoint2 = "https://zeta-labs-backend-5ba732d1aabf.herokuapp.com/create_user";
         fetch(endpoint2, {
           method: "POST",
           headers: {

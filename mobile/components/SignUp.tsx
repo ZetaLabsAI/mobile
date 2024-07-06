@@ -13,7 +13,7 @@ export default function LaiveAccount() {
   const context = useContext(AppContext);
 
   const doesHaveAccount = () => {
-    const endpoint2 = "https://laivehacktj-f736fedf6a43.herokuapp.com/create_user";
+    const endpoint2 = "https://zeta-labs-backend-5ba732d1aabf.herokuapp.com/create_user";
     if (password.length < 10) {
       ToastAndroid.show("Password must be at least 10 characters long", ToastAndroid.SHORT);
       return;
